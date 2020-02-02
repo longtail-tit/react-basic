@@ -40,7 +40,7 @@ but, 브라우저는 DOM기반으로 작성되기 때문에 페이지가 그때�
 
  <br><br><br>
  
-> JSX란
+> <h3>JSX란</h3>
 
 javascript + XML 이다. 자바스크립트의 확장 문법. 자바스크립트에서 마크업 코드를 작성할 수 있게 된다. 
 
@@ -94,7 +94,7 @@ export default App;
 
 <br><br>
 
-> props 와 state
+> <h3>props 와 state</h3>
 
 리액트에서 데이터를 다룰 때 사용되는 개념 
 
@@ -271,7 +271,7 @@ constructor(props){
 
 <br/><br/>
 
-> LifeCycle API
+> <h3>LifeCycle API</h3>
 
 컴포넌트의 생성, 삭제 등의 모든 생명주기를 관리하는 API 
 
