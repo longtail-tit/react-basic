@@ -197,7 +197,7 @@ export default MyName;
 
 <br/><br/>
 
-* state : 컴포넌트 자기 자신이 내부에서 변경할 수 있다. 변화가 필요할 경우 컴포넌트의 내장함수인 'setState' 함수를 사용한다. 
+* state : 컴포넌트 자기 자신이 내부에서 변경할 수 있다. 변화가 필요할 경우 컴포넌트의 내장함수인 'setState' 함수를 사용한다. state가 바뀔 때마다 re-rendering 된다. 
 
 <br/>
 
@@ -243,7 +243,7 @@ export default Counter;
 
 state 를 사용할 땐 this.setState 함수 사용해준다.
 
-만약 람다식이 아니라 기본 함수형으로 메소드를 생성해준다면 this 를 인식하지 못한다. 
+만약 **arrows function**이 아니라 기본 함수형으로 메소드를 생성해준다면 **this** 를 인식하지 못한다. 
 
 ```js
  handleIncrease(){
@@ -269,5 +269,29 @@ constructor(props){
   }
 ```
 
+<br/><br/>
+
+> LifeCycle API
+
+컴포넌트의 생성, 삭제 등의 모든 생명주기를 관리하는 API 
+
+![image](https://user-images.githubusercontent.com/48245776/73604752-16be2000-45d9-11ea-8a49-62ee189a9164.png)
+
+* **Mounting** : 컴포넌트가 브라우저에 나타나는 것 
+  * ***constructor*** : 컴포넌트가 만들어지는 과정에서 가장 먼저 
+실행되는 함수 (state 초기 설정, 컴포넌트 만들어지기 이전 선행작업이 있는 경우)
+  * ***getDeriveStateFromProps*** : 만약에 props로 받는 값을 state로 동기화 시키고 싶을 때 
+  * ***render*** : 어떤 DOM을 만들게 될지, 내부 태그들에 어떤 값을 전달해 줄지를 정의 
+  * ***componentDidMount*** : 컴포넌트가 브라우저에 나타나게 된 시점에 뭘 할건지 명시해준다. 브라우저 상에 나타나게 된 이후에 호출됨. 외부 라이브러리를 사용 or 네트워크 요청 or API요청을 할 때 여기서 처리하게 된다. 
+
+
+* **Updating** : 컴포넌트의 props나 state가 바뀌었을 때 
+  * ***shouldComponentUpdate*** : 컴포넌트 update 성능을 최적화하고 싶을때. 기본적으로 부모 컴포넌트가 렌더링되면 자식도 렌더함수 호출된다. 버추얼 돔에 렌더링 되는 작업에서도 성능을 아끼고 싶을 때 사용. true or false를 반환한다. true -> render / false -> stop 할 수 있다. 
+  * ***getSnapshotBeforeUpdate*** : 렌더링 결과물이 브라우저에 반영되기 직전에 호출되는 함수. 스크롤위치나 돔의크기를 사전작업하고자 할 때.
+  * ***componentDidUpdate*** : update뒤에 호출되는 함수. state변경 후에 이전상태, 지금의 상태를 비교할 수 있다. 
+
+
+* **Unmounting** : 컴포넌트가 브라우저에서 사라질 때 
+  * ***componentWillUnmount*** : 컴포넌트가 사라지는 과정에 호출되는 함수 
 
 
