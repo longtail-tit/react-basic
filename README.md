@@ -75,3 +75,127 @@ class App extends Component {
   };
 }
 ```
+
+App.css 파일을 만들어서 적용해보자 
+
+```js
+import React, { Component } from 'react';
+import './App.css';    // css파일 불러오기 
+
+class App extends Component {
+  render() {
+    return <div className="App">아녕하세요!</div>;  
+  }
+}
+export default App;
+```
+
+리액트에서는 클래스 이름을 '''className''' 로 명시해줘야 한다. (그냥 class라고 해도 문제는 없음.)
+
+<br><br>
+
+> props 와 state
+
+리액트에서 데이터를 다룰 때 사용되는 개념 
+
+* props : 부모컴포넌트에서 자식컴포넌트로 값을 넘겨줄 때 사용된다. 
+
+***MyName.js*** (자식 컴포넌트)
+```js
+import React, {Component} from 'react';
+
+class MyName extends Component {
+  render(){
+    return(
+      <div>
+        안녕하세요, 제 이름은 <b>{this.props.name}</b>입니다. 
+      </div>
+    )
+  }
+}
+
+export default MyName;
+```
+props를 넘겨 받을 때 'this.props' 로 받는다. 
+
+***App.js*** (부모 컴포넌트)
+```js
+import React, { Component } from 'react';
+import './App.css';    
+import MyName from './MyName'   // 자식컴포넌트인 MyName.js에서 MyName를 import.
+
+class App extends Component {
+  render() {
+    return (
+      <MyName name = "리액트"/>
+    );
+  }
+}
+export default App;
+```
+
+만약에 name 밸류가 주어지지 않는다면 디폴트 밸류를 지정할 수 있다. 
+
+컴포넌트 안에 static으로 티폴트 props를 설정하는 방법과 , 컴포넌트 밖에서 설정하는 방법이 있다. 
+
+
+***컴포넌트 안에서***
+```js
+class MyName extends Component {
+
+  static defaultProps = {     // 기본값 설정 
+    name : '기본이름'
+  }
+  
+   render(){
+    return(
+      <div>
+        안녕하세요, 제 이름은 <b>{this.props.name}</b>입니다. 
+      </div>
+    )
+  }
+}
+```
+
+***컴포넌트 밖에서***
+```js
+import React, {Component} from 'react';
+
+class MyName extends Component {
+  render(){
+    return(
+      <div>
+        안녕하세요, 제 이름은 <b>{this.props.name}</b>입니다. 
+      </div>
+    )
+  }
+}
+
+MyName.defaultProps = {
+  name : 'tmddus'
+};
+export default MyName;
+```
+<br/>
+class형 컴포넌트를 함수형 컴포넌트로 바꿔보자. 
+
+```js
+import React from 'react';
+
+const MyName = ({name}) => {
+  return <div>안녕하세요! 제 이름은 {name} 입니다. </div>
+}
+
+MyName.defaultProps = {
+  name : 'tmddus'
+};
+export default MyName;
+```
+함수형 컴포넌트를 사용하게 되면 코드의 상단에서 컴포넌트를 불러오지 않아도 된다. 
+
+함수형 컴포넌트는 초기 마운트 속도가 미세하게 더 빠르다. 메모리 자원도 덜 사용함. 값을 받아와서 보여주기만 하는 용도의 컴포넌트일 경우 함수형으로 만들어야 나중에 컴포넌트 수가 많아졌을때 더욱 효율적일 수 있다. 
+
+<br/><br/>
+
+* state : 컴포넌트 자기 자신이 내부에서 변경할 수 있다. 변화가 필요할 경우 컴포넌트의 내장함수인 'setState' 함수를 사용한다. 
+
