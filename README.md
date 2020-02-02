@@ -199,3 +199,75 @@ export default MyName;
 
 * state : 컴포넌트 자기 자신이 내부에서 변경할 수 있다. 변화가 필요할 경우 컴포넌트의 내장함수인 'setState' 함수를 사용한다. 
 
+<br/>
+
+***Counter.js***
+```js
+import React, { Component } from 'react';
+
+class Counter extends Component {
+  state = {
+    number: 0 // 고정 값 할당
+  };
+
+  // 값 증가 메소드
+  handleIncrease = () => {
+    // number 값 update
+    // bad case
+    //this.state.number = thos.state.number + 1
+    this.setState({
+      number: this.state.number + 1
+    });
+  };
+  //값 감소 메소드
+  handleDecrease = () => {
+    this.setState({
+      number: this.state.number - 1
+    });
+  };
+  render() {
+    return (
+      <div>
+        <h1>카운터</h1>
+        <div>값 : {this.state.number}</div>
+        {/* 버튼이 클릭 됐을 때 메소드 적용 되도록 이벤트 설정해준다  */}
+        <button onClick={this.handleIncrease}>+</button>
+        <button onClick={this.handleDecrease}>-</button>
+      </div>
+    );
+  }
+}
+
+export default Counter;
+```
+
+state 를 사용할 땐 this.setState 함수 사용해준다.
+
+만약 람다식이 아니라 기본 함수형으로 메소드를 생성해준다면 this 를 인식하지 못한다. 
+
+```js
+ handleIncrease(){
+    this.setState({
+      number: this.state.number + 1
+    });
+  };
+```
+
+**TypeError: Cannot read property 'setState' of undefined**
+
+자바스크립트에서 this를 사용하려면 constructor 안에서 super(props) 를 명시해줘야 한다. 
+
+Component를 extends 했기 때문에 컴포넌트가 가지고있는 생성함수를 먼저 호출해주어야 한다. ([왜 super(props)를 사용해야하는가?](https://velog.io/@honeysuckle/%EB%B2%88%EC%97%AD-Dan-Abramov-%EC%99%9C-superprops-%EB%A5%BC-%EC%9E%91%EC%84%B1%ED%95%B4%EC%95%BC-%ED%95%98%EB%8A%94%EA%B0%80))
+
+
+```js
+constructor(props){
+    super(props);
+    this.handleDecrease = this.handleDecrease.bind(this);
+    this.handleIncrease = this.handleIncrease.bind(this);
+    // 각 메소드에서 사용하는 this 가 constructor 내부의 this다 라는 것을 명시 
+  }
+```
+
+
+
